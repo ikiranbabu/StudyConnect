@@ -1,26 +1,28 @@
 package org.alias.studyconnect.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-@Embeddable
+@Entity
 public class Request {
 	
-	private int requestID;
+	@EmbeddedId
+	private RequestId requestId;
+	@ManyToOne
+	@JoinColumn(name = "SUBJECT_ID")
 	private Subject subject;
-	private Module module;
-	private UserDetails toUser;
-	private UserDetails fromUser;
+	@ManyToOne
+	@JoinColumn(name = "USER_ID")
+	private UserDetails user;
+	private int flag;
+	
 	
 	public Request(){}
 
-
-	public int getRequestID() {
-		return requestID;
-	}
-
-	public void setRequestID(int requestID) {
-		this.requestID = requestID;
-	}
+	//Getters and Setters
 
 	public Subject getSubject() {
 		return subject;
@@ -30,28 +32,21 @@ public class Request {
 		this.subject = subject;
 	}
 
-	public Module getModule() {
-		return module;
+	public RequestId getRequestId() {
+		return requestId;
 	}
 
-	public void setModule(Module module) {
-		this.module = module;
+	public void setRequestId(RequestId requestId) {
+		this.requestId = requestId;
 	}
 
-	public UserDetails getToUser() {
-		return toUser;
+	public int getFlag() {
+		return flag;
 	}
 
-	public void setToUser(UserDetails toUser) {
-		this.toUser = toUser;
+	public void setFlag(int flag) {
+		this.flag = flag;
 	}
 
-	public UserDetails getFromUser() {
-		return fromUser;
-	}
-
-	public void setFromUser(UserDetails fromUser) {
-		this.fromUser = fromUser;
-	}
 	
 }

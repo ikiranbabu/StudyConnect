@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class College {
@@ -16,7 +17,10 @@ public class College {
 	
 	private int collegeID;
 	private String collegeName;
+	@OneToMany(mappedBy = "collegeId")
 	private List<Department> deptList = new ArrayList<>();
+	@OneToMany(mappedBy = "college")
+	private List<Department> subjectList = new ArrayList<>();
 	
 	public College(){}
 	
