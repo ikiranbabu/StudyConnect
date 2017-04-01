@@ -21,7 +21,7 @@ public class Department {
 	private String name;
 	@ManyToOne
 	@JoinColumn(name = "COLLEGE_ID")
-	private int collegeId;
+	private College collegeId;
 	@OneToMany(mappedBy = "dept")
 	private List<Subject> subjectList = new ArrayList<>();
 	

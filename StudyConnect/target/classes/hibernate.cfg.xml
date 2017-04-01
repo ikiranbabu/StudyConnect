@@ -37,8 +37,14 @@
     
     <!-- Name the annotated entity classes -->
     <mapping class="org.alias.studyconnect.model.UserDetails"/>
-
-        
+    <mapping class="org.alias.studyconnect.model.Subject"/>
+    <mapping class="org.alias.studyconnect.model.Module"/>
+	<mapping class="org.alias.studyconnect.model.Request"/>
+    <mapping class="org.alias.studyconnect.model.RequestId"/>
+    <mapping class="org.alias.studyconnect.model.College"/>
+    <mapping class="org.alias.studyconnect.model.Department"/>
+    <mapping class="org.alias.studyconnect.model.ChatDetails"/>    
+    
     <!--  <mapping resource="org/hibernate/tutorial/domain/Event.hbm.xml"/>  -->
   </session-factory>
 </hibernate-configuration>

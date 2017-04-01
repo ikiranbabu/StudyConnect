@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlTransient;
@@ -20,9 +21,10 @@ public class UserDetails {
 	private String email;
 	private String password;
 	//@Embedded
-	//private ChatDetails chatDetails;
-	//@ManyToMany
-	//private List<Subject> subjectList = new ArrayList<>();
+	//private ChatDetails chatDetails = new ChatDetails();
+	@ManyToMany
+	@JoinColumn(name = "SUBJECT_ID")
+	private List<Subject> subjectList = new ArrayList<>();
 	//@OneToMany(mappedBy = "user")
 	//List<Request> requestList = new ArrayList<>();
 	

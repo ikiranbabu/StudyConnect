@@ -20,7 +20,7 @@ public class College {
 	@OneToMany(mappedBy = "collegeId")
 	private List<Department> deptList = new ArrayList<>();
 	@OneToMany(mappedBy = "college")
-	private List<Department> subjectList = new ArrayList<>();
+	private List<Subject> subjectList = new ArrayList<>();
 	
 	public College(){}
 	
