@@ -3,14 +3,15 @@ package org.alias.studyconnect.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlTransient
 public class UserDetails {
 	
 	@Id
@@ -18,12 +19,12 @@ public class UserDetails {
 	private String userName;
 	private String email;
 	private String password;
-	@Embedded
-	private ChatDetails chatDetails;
-	@ManyToMany
-	private List<Subject> subjectList = new ArrayList<>();
-	@OneToMany(mappedBy = "user")
-	List<Request> requestList = new ArrayList<>();
+	//@Embedded
+	//private ChatDetails chatDetails;
+	//@ManyToMany
+	//private List<Subject> subjectList = new ArrayList<>();
+	//@OneToMany(mappedBy = "user")
+	//List<Request> requestList = new ArrayList<>();
 	
 
 	public UserDetails(){}
@@ -66,30 +67,30 @@ public class UserDetails {
 	}
 	
 	//ChatDetails
-	public ChatDetails getChatDetails() {
-		return chatDetails;
-	}
-
-	public void setChatDetails(ChatDetails chatDetails) {
-		this.chatDetails = chatDetails;
-	}
+//	public ChatDetails getChatDetails() {
+//		return chatDetails;
+//	}
+//
+//	public void setChatDetails(ChatDetails chatDetails) {
+//		this.chatDetails = chatDetails;
+//	}
 	
 	//SubjectList
-	public List<Subject> getSubjectList() {
-		return subjectList;
-	}
-	public void setSubjectList(List<Subject> subjectList) {
-		this.subjectList = subjectList;
-	}
+//	public List<Subject> getSubjectList() {
+//		return subjectList;
+//	}
+//	public void setSubjectList(List<Subject> subjectList) {
+//		this.subjectList = subjectList;
+//	}
 	
 	//RequestList
-	public List<Request> getRequestList() {
-		return requestList;
-	}
-
-	public void setRequestList(List<Request> requestList) {
-		this.requestList = requestList;
-	}
+//	public List<Request> getRequestList() {
+//		return requestList;
+//	}
+//
+//	public void setRequestList(List<Request> requestList) {
+//		this.requestList = requestList;
+//	}
 	
 	
 }
