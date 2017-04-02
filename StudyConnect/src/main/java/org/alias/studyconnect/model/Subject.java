@@ -1,11 +1,8 @@
 package org.alias.studyconnect.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,12 +18,12 @@ public class Subject {
 	@GeneratedValue
 	private int subjectCRN;
 	private String subjectName;
-	@ElementCollection
+	@OneToMany(mappedBy = "subjectName")
 	private Set<Module> modules = new HashSet<>();
 	@ManyToMany(mappedBy = "subjectList")
-	private List<UserDetails> studentList = new ArrayList<>();
+	private Set<UserDetails> studentList = new HashSet<>();
 	@OneToMany(mappedBy = "subject")
-	private List<Request> requestList = new ArrayList<>();
+	private Set<Request> requestList = new HashSet<>();
 	@ManyToOne
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department dept;
@@ -67,18 +64,36 @@ public class Subject {
 	}
 	
 	//UserList
-	public List<UserDetails> getStudentList() {
+	public Set<UserDetails> getStudentList() {
 		return studentList;
 	}
-	public void setStudentList(List<UserDetails> studentList) {
+	public void setStudentList(Set<UserDetails> studentList) {
 		this.studentList = studentList;
 	}
 	
 	//RequestList
-	public List<Request> getRequestList() {
+	public Set<Request> getRequestList() {
 		return requestList;
 	}
-	public void setRequestList(List<Request> requestList) {
+	public void setRequestList(Set<Request> requestList) {
 		this.requestList = requestList;
+	}
+	
+	//Department
+	public Department getDept() {
+		return dept;
+	}
+
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+
+	//College
+	public College getCollege() {
+		return college;
+	}
+
+	public void setCollege(College college) {
+		this.college = college;
 	}
 }

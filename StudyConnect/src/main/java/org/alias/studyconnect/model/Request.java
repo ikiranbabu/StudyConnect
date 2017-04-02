@@ -1,6 +1,5 @@
 package org.alias.studyconnect.model;
 
-import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -15,8 +14,9 @@ public class Request {
 	@JoinColumn(name = "SUBJECT_ID")
 	private Subject subject;
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
-	private UserDetails user;
+	private UserDetails userSent;
+	@ManyToOne
+	private UserDetails userReceived;
 	private int flag;
 	
 	

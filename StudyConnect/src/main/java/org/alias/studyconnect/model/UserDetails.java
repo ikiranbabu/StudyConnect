@@ -1,9 +1,10 @@
 package org.alias.studyconnect.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,14 +21,17 @@ public class UserDetails {
 	private String userName;
 	private String email;
 	private String password;
-	//@Embedded
-	//private ChatDetails chatDetails = new ChatDetails();
 	@ManyToMany
 	@JoinColumn(name = "SUBJECT_ID")
 	private List<Subject> subjectList = new ArrayList<>();
-	//@OneToMany(mappedBy = "user")
-	//List<Request> requestList = new ArrayList<>();
-	
+	@ManyToMany(mappedBy = "user")
+	private Set<Module> moduleCompleted = new HashSet<>();
+	@OneToMany(mappedBy ="userSent")
+	Set<Request> reqSent = new HashSet<>();
+	@OneToMany(mappedBy = "userReceived")
+	Set<Request> reqReceived = new HashSet<>();
+	//@Embedded
+	//private ChatDetails chatDetails = new ChatDetails();
 
 	public UserDetails(){}
 	
