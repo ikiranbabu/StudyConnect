@@ -50,4 +50,9 @@ public class UserResource {
 		return new SearchSubjectResource();
 	}
 	
+	@Path("/request/")
+	public RequestResource message5(){
+		return new RequestResource();
+	}
+	
 }
