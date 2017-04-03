@@ -9,8 +9,7 @@ public class RegistrationService {
 	private EntityManager entityManager;
 	
 	public UserDetails registerUser(UserDetails user){
-		entityManager = Persistence.createEntityManagerFactory("studyconnect")
-				.createEntityManager();
+		entityManager = EntityUtil.getEntityManager();
  
 		entityManager.getTransaction().begin();
  
