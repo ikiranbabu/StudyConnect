@@ -6,13 +6,16 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;;
+import javax.ws.rs.core.MediaType;
+
+import org.alias.studyconnect.model.UserDetails;
+import org.alias.studyconnect.services.userservices.RegistrationService;;
 
 @Path("user")
-@Consumes(MediaType.TEXT_PLAIN)
-@Produces(MediaType.TEXT_PLAIN)
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+
 public class UserResource {
-	
 	
 	@GET
 	public String messageWelcome(){
@@ -21,9 +24,12 @@ public class UserResource {
 	
 	@Path("/myregistration")
 	@POST
-	public String message(){
-		return "This request needs to register a new user to the database and send back the response as ok"
-				+ "or not ok with redirection to the add courses page";
+	public UserDetails message(UserDetails user){
+		RegistrationService rs = new RegistrationService();
+		UserDetails userNew = rs.registerUser(user);
+		return userNew;
+//		return "This request needs to register a new user to the database and send back the response as ok"
+//				+ "or not ok with redirection to the add courses page";
 	}
 	
 	@GET

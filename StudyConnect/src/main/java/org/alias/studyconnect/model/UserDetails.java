@@ -5,21 +5,27 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@XmlTransient
+@XmlRootElement	
 public class UserDetails {
 	
 	@Id
 	private int userId;
+	@Column(nullable = false)
 	private String userName;
+	@Column(nullable = false)
 	private String email;
+	@Column(nullable = false)
 	private String password;
 	@ManyToMany
 	@JoinColumn(name = "SUBJECT_ID")
@@ -50,7 +56,7 @@ public class UserDetails {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
+	public void setUserName(@NotNull String userName) {
 		this.userName = userName;
 	}
 	
