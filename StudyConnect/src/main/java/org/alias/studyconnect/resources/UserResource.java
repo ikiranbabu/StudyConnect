@@ -1,21 +1,28 @@
 package org.alias.studyconnect.resources;
 
 
+import javax.net.ssl.SSLEngineResult.Status;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.*;
 
 import org.alias.studyconnect.model.UserDetails;
-import org.alias.studyconnect.services.userservices.RegistrationService;;
+import org.alias.studyconnect.services.userservices.RegistrationService;
+import org.alias.studyconnect.services.userservices.UserService;;
 
 @Path("user")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 
 public class UserResource {
+	
+	private UserService us;
 	
 	@GET
 	public String messageWelcome(){
@@ -24,18 +31,24 @@ public class UserResource {
 	
 	@Path("/myregistration")
 	@POST
-	public UserDetails message(UserDetails user){
+	public UserDetails register(UserDetails user){
 		RegistrationService rs = new RegistrationService();
 		UserDetails userNew = rs.registerUser(user);
 		return userNew;
-//		return "This request needs to register a new user to the database and send back the response as ok"
-//				+ "or not ok with redirection to the add courses page";
+//		This request needs to register a new user to the database and send back the response as ok
+//		or not ok with redirection to the add courses page
 	}
 	
 	@GET
 	@Path("/{userId}")
-	public String message1(){
-		return "This response will fetch the user details and send user details - for the settings/profile page";
+	public Response profile(@PathParam("userId") int id){
+		us = new UserService();
+		UserDetails user = us.fetchProfile(id);
+		return Response.status(javax.ws.rs.core.Response.Status.OK)
+					   .entity(user)
+					   .build();
+		
+		//This response will fetch the user details and send user details - for the settings/profile page
 	}
 	
 	@Path("/login")

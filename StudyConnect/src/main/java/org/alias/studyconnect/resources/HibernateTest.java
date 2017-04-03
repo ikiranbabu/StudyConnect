@@ -15,13 +15,19 @@ public class HibernateTest {
 		session.beginTransaction();
 		UserDetails user = new UserDetails();
 		user.setEmail("aliasgar@mail.usf.edu");
-		user.setUserId(1);
+		user.setUserId(20);
 		user.setUserName("Ali Asgar");
 		user.setPassword("Hellbent");
 		
 		session.save(user);
+		session.get(UserDetails.class, 18);
 		session.getTransaction().commit();
 		session.close();
+		Session session2 = sessionFactory.openSession();
+		session2.beginTransaction();
+		session2.get(UserDetails.class, 18);
+		session2.getTransaction().commit();
+		session2.close();
 	}
 
 }
