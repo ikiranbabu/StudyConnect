@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -19,10 +20,12 @@ import javax.xml.bind.annotation.XmlTransient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @XmlRootElement	
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY )
+//@Cacheable
+//@Cache(usage = CacheConcurrencyStrategy.READ_ONLY )
 public class UserDetails {
 	
 	@Id
@@ -33,7 +36,7 @@ public class UserDetails {
 	private String email;
 	@Column(nullable = false)
 	private String password;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "SUBJECT_ID")
 	private Set<Subject> subjectList = new HashSet<>();
 	@ManyToMany(mappedBy = "user")

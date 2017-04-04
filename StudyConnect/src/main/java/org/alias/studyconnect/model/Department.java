@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Generated;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Department {
 	@ManyToOne
 	@JoinColumn(name = "COLLEGE_ID")
 	private College collegeId;
-	@OneToMany(mappedBy = "dept")
+	@OneToMany(mappedBy = "dept", fetch = FetchType.EAGER) 
 	private List<Subject> subjectList = new ArrayList<>();
 	
 	public Department(){}

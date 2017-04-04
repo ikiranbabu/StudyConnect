@@ -27,10 +27,10 @@
  			<!-- Enable Hibernate's automatic session context management -->
 <!-- 			<property name="current_session_context_class" value="thread" /> -->
 
-				<!-- second-level cache config --> 
-			<property name="hibernate.cache.use_second_level_cache" value="true" />
-			<property name="hibernate.cache.use_query_cache" value="true" />
-			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" />
+<!-- 				second-level cache config  -->
+<!-- 			<property name="hibernate.cache.use_second_level_cache" value="true" /> -->
+<!-- 			<property name="hibernate.cache.use_query_cache" value="true" /> -->
+<!-- 			<property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory" /> -->
 <!-- 				Echo all executed SQL to stdout  -->
 			<property name="show_sql" value="true" />
 		</properties>

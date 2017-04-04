@@ -1,7 +1,8 @@
 package org.alias.studyconnect.resources;
 
 
-import javax.net.ssl.SSLEngineResult.Status;
+import java.util.Set;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,7 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
 import org.alias.studyconnect.services.userservices.LoginService;
 import org.alias.studyconnect.services.userservices.RegistrationService;
@@ -52,11 +55,18 @@ public class UserResource {
 	}
 	
 	@Path("/login")
-	@GET
-	public Response login(@PathParam("email") String email , @PathParam("password") String password){
+	@POST
+	public Response login(UserDetails user){
 			LoginService loginService = new LoginService();
-			loginService.login(email, password);
-		return null;
+			Set<Subject> subjectList = loginService.login(user.getUserId(), user.getPassword());
+			if(subjectList != null){
+				return Response.status(Status.OK)
+					.entity(user)
+					.build();
+			}else{
+				return Response.status(Status.NOT_FOUND)
+						.build();
+			}
 		
 //		"This methhod will attempt validating login and return the response with all the"
 //		 "subject that a student has enrolled and redirect to the dashboard";

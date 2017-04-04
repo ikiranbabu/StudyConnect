@@ -1,38 +1,53 @@
 package org.alias.studyconnect.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity		
-public class Subject {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+@Entity	
+@XmlRootElement
+public class Subject implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	private int subjectCRN;
 	private String subjectName;
-	@OneToMany(mappedBy = "subjectName")
+	@OneToMany(mappedBy = "subjectName", fetch = FetchType.EAGER)
 	private Set<Module> modules = new HashSet<>();
-	@ManyToMany(mappedBy = "subjectList")
+	@ManyToMany(mappedBy = "subjectList", fetch = FetchType.EAGER)
+	@JsonIgnore
 	private Set<UserDetails> studentList = new HashSet<>();
-	@OneToMany(mappedBy = "subject")
+	@OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
 	private Set<Request> requestList = new HashSet<>();
 	@ManyToOne
 	@JoinColumn(name = "DEPARTMENT_ID")
+	@JsonIgnore
 	private Department dept;
 	@ManyToOne
 	@JoinColumn(name = "COLLEGE_ID")
+	@JsonIgnore
 	private College college;
 
 
 
-	public Subject(){}
+	public Subject() {}
 	
 	
 	//Getters and Setters
@@ -94,5 +109,9 @@ public class Subject {
 
 	public void setCollege(College college) {
 		this.college = college;
+	}
+	
+	public String toString(){
+		return (this.subjectCRN + " " + this.subjectName + " " + this.dept + " " + this.college);
 	}
 }
