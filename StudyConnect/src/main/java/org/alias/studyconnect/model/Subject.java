@@ -15,7 +15,6 @@ import javax.persistence.OneToMany;
 public class Subject {
 	
 	@Id
-	@GeneratedValue
 	private int subjectCRN;
 	private String subjectName;
 	@OneToMany(mappedBy = "subjectName")
