@@ -27,13 +27,6 @@ public class Department {
 	
 	public Department(){}
 	
-	public int getID() {
-		return deptId;
-	}
-
-	public void setID(int deptId) {
-		this.deptId = deptId;
-	}
 
 	public String getName() {
 		return name;
@@ -42,6 +35,30 @@ public class Department {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
+
+	public College getCollegeId() {
+		return collegeId;
+	}
+
+	public void setCollegeId(College collegeId) {
+		this.collegeId = collegeId;
+	}
+
+	public List<Subject> getSubjectList() {
+		return subjectList;
+	}
+
+	public void setSubjectList(List<Subject> subjectList) {
+		this.subjectList = subjectList;
+	}
+
 	
 	
 }

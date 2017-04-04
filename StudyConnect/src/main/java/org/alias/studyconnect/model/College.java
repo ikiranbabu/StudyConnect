@@ -13,8 +13,7 @@ import javax.persistence.OneToMany;
 public class College {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)	
 	private int collegeID;
 	private String collegeName;
 	@OneToMany(mappedBy = "collegeId")

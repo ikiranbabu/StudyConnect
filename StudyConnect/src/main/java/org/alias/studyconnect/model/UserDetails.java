@@ -22,20 +22,20 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Entity
 @XmlRootElement	
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE )
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY )
 public class UserDetails {
 	
 	@Id
 	private int userId;
 	@Column(nullable = false)
 	private String userName;
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	private String email;
 	@Column(nullable = false)
 	private String password;
 	@ManyToMany
 	@JoinColumn(name = "SUBJECT_ID")
-	private List<Subject> subjectList = new ArrayList<>();
+	private Set<Subject> subjectList = new HashSet<>();
 	@ManyToMany(mappedBy = "user")
 	private Set<Module> moduleCompleted = new HashSet<>();
 	@OneToMany(mappedBy ="userSent")
@@ -93,13 +93,13 @@ public class UserDetails {
 //		this.chatDetails = chatDetails;
 //	}
 	
-	//SubjectList
-//	public List<Subject> getSubjectList() {
-//		return subjectList;
-//	}
-//	public void setSubjectList(List<Subject> subjectList) {
-//		this.subjectList = subjectList;
-//	}
+//	SubjectList
+	public Set<Subject> getSubjectList() {
+		return subjectList;
+	}
+	public void setSubjectList(Set<Subject> subjectList) {
+		this.subjectList = subjectList;
+	}
 	
 	//RequestList
 //	public List<Request> getRequestList() {

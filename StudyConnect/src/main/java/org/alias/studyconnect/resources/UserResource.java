@@ -10,9 +10,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.*;
 
 import org.alias.studyconnect.model.UserDetails;
+import org.alias.studyconnect.services.userservices.LoginService;
 import org.alias.studyconnect.services.userservices.RegistrationService;
 import org.alias.studyconnect.services.userservices.UserService;;
 
@@ -53,9 +53,13 @@ public class UserResource {
 	
 	@Path("/login")
 	@GET
-	public String message2(){
-		return "This methhod will attempt validating login and return the response with all the"
-				+ "subject that a student has enrolled and redirect to the dashboard";
+	public Response login(@PathParam("email") String email , @PathParam("password") String password){
+			LoginService loginService = new LoginService();
+			loginService.login(email, password);
+		return null;
+		
+//		"This methhod will attempt validating login and return the response with all the"
+//		 "subject that a student has enrolled and redirect to the dashboard";
 	}
 	
 	
