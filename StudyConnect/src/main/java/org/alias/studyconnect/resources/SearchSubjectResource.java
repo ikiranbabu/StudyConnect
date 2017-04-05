@@ -39,17 +39,15 @@ public class SearchSubjectResource {
 		return Response.status(Status.OK)
 					   .entity(arrayToJson)
 					   .build();
-		
-//		GenericEntity<List<Subject>> entity = new GenericEntity<List<Subject>>
-//											  (new ArrayList<Subject>(subList)) {};
-//		subList.toArray(new Subject[subList.size()])
 	}
+	
+	
 	
 	@GET	//Return all the subject with the given college id
 	@Path("college/{collegeId}")
-	public Response subjectInCollege(@PathParam("collegeId") int collegeId) throws JsonProcessingException{
+	public Response subjectByCollege(@PathParam("collegeId") int collegeId) throws JsonProcessingException{
 		subjectService = new SubjectService();
-		List<Subject> subjects = subjectService.getSubjectInCollege(collegeId);
+		List<Subject> subjects = subjectService.getSubjectByCollege(collegeId);
 		objectMapper = new ObjectMapper();
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		String subInCollege = objectMapper.writeValueAsString(subjects);
@@ -58,16 +56,40 @@ public class SearchSubjectResource {
 					  .build();
 	}
 	
-	@GET
+	
+	
+	@GET	// Return all the subject with the given college id and department id
 	@Path("college/{collegeId}/dept/{deptId}")
-	public String message3(){
-		return "Return all the subject with the given college id and department id";
+	public Response subjectByCollegeDept(@PathParam("collegeId") int collegeId, 
+										 @PathParam("deptId") int deptId) throws JsonProcessingException{
+		subjectService = new SubjectService();
+		List<Subject> subjects = subjectService.getSubjectsByCollegeDept(collegeId, deptId);
+		objectMapper = new ObjectMapper();
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		String subjectList = objectMapper.writeValueAsString(subjects);
+		return Response.status(Status.OK)
+					  .entity(subjectList)
+					  .build();
 	}
 	
-	@GET
+	
+	
+	@GET // return the subject with a valid CRN
 	@Path("{subjectCRN}")
-	public String message4(){
-		return "return the subject with a valid CRN";
+	public Response subjectByCRN(@PathParam("subjectCRN") int CRN) throws JsonProcessingException{
+		subjectService = new SubjectService();
+		Subject subject = subjectService.getSubjectsByCRN(CRN);
+		objectMapper = new ObjectMapper();
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		String result = objectMapper.writeValueAsString(subject);
+		return Response.status(Status.OK)
+						.entity(result)
+						.build();
 	}
 
 }
+
+
+//GenericEntity<List<Subject>> entity = new GenericEntity<List<Subject>>
+//(new ArrayList<Subject>(subList)) {};
+//subList.toArray(new Subject[subList.size()])

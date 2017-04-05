@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import org.alias.studyconnect.model.College;
+import org.alias.studyconnect.model.Department;
 import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
 
@@ -14,18 +15,6 @@ import org.alias.studyconnect.model.UserDetails;
 public class SubjectService {
 	
 	private EntityManager em ;
-	
-	
-	public List<Subject>getAllSubjects(){
-		em = EntityUtil.getEntityManager();
-		em.getTransaction().begin();
-		Query query = em.createQuery("from Subject");
-		@SuppressWarnings("unchecked")
-		List<Subject> subList = (List<Subject>)query.getResultList();
-		em.getTransaction().commit();
-		em.close();
-		return subList;	
-	}
 	
 	
 	public Set<Subject> mySubjects(int id){
@@ -62,11 +51,21 @@ public class SubjectService {
 		
 	}
 	
-	public List<Subject> getSubjectInCollege(int id){
+	public List<Subject>getAllSubjects(){
 		em = EntityUtil.getEntityManager();
 		em.getTransaction().begin();
-		College college = em.find(College.class, id);
-		System.out.println(college.getCollegeName());
+		Query query = em.createQuery("from Subject");
+		@SuppressWarnings("unchecked")
+		List<Subject> subList = (List<Subject>)query.getResultList();
+		em.getTransaction().commit();
+		em.close();
+		return subList;	
+	}
+	
+	public List<Subject> getSubjectByCollege(int id){
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.find(College.class, id);
 		Query query = em.createQuery("from Subject as sub where sub.college.collegeID = ?");
 		query.setParameter(0 , new Integer(id));
 		@SuppressWarnings("unchecked")
@@ -74,6 +73,31 @@ public class SubjectService {
 		em.getTransaction().commit();
 		em.close();
 		return subjects;
+	}
+	
+	public List<Subject> getSubjectsByCollegeDept(int colId, int deptId){
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		em.find(College.class, colId);
+		em.find(Department.class, deptId);
+		Query query = em.createQuery("from Subject as sub where sub.college.collegeID = ? and "
+									+ "sub.dept.deptId = ?");
+		query.setParameter(0 , new Integer(colId));
+		query.setParameter(1 , new Integer(deptId));
+		@SuppressWarnings("unchecked")
+		List<Subject> subjects = (List<Subject>) query.getResultList();
+		em.getTransaction().commit();
+		em.close();
+		return subjects;
+	}
+	
+	public Subject getSubjectsByCRN(int CRN){
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		Subject subject = em.find(Subject.class, CRN);
+		em.getTransaction().commit();
+		em.close();
+		return subject;
 	}
 	
 }
