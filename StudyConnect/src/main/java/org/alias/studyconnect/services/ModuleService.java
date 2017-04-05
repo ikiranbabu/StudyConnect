@@ -43,6 +43,26 @@ public class ModuleService {
 		em.close();
 		return result;
 	}
+
+	public int moduleCompleted(int userId, Module mod) {
+		int result;
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		Module module = em.find(Module.class, mod.getModuleId());
+		UserDetails user = em.find(UserDetails.class, userId);
+		try{
+			module.getUser().add(user);
+			user.getModuleCompleted().add(module);
+			result = 1;
+		}catch(NullPointerException e){
+			e.printStackTrace();
+			result =  0;
+		}
+		em.getTransaction().commit();
+		em.close();
+		
+		return result;
+	}
 	
 	
 	

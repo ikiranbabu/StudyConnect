@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.alias.studyconnect.model.Module;
 import org.alias.studyconnect.services.ModuleService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -60,9 +61,14 @@ public class ModuleResource {
 //	Add to the completed module list in the user details
 //	Add the student to the list completed student to the particular module
 	@POST
-	@Path("module/{moduleId}/")
-	public Response message9(){
-		return null;
+	@Path("module/")
+	public Response moduleCompleted(@PathParam("userId") int userId , Module module){
+		moduleService = new ModuleService();
+		int result = moduleService.moduleCompleted(userId, module);
+		if(result == 0)
+			return Response.status(Status.NOT_FOUND).build();
+		return Response.status(Status.OK)
+						.build();
 	}
 	
 	

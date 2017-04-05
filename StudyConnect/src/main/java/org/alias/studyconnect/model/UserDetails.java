@@ -41,6 +41,13 @@ public class UserDetails {
 	private Set<Subject> subjectList = new HashSet<>();
 	@ManyToMany(mappedBy = "user")
 	private Set<Module> moduleCompleted = new HashSet<>();
+	public Set<Module> getModuleCompleted() {
+		return moduleCompleted;
+	}
+
+	public void setModuleCompleted(Set<Module> moduleCompleted) {
+		this.moduleCompleted = moduleCompleted;
+	}
 	@OneToMany(mappedBy ="userSent")
 	Set<Request> reqSent = new HashSet<>();
 	@OneToMany(mappedBy = "userReceived")
