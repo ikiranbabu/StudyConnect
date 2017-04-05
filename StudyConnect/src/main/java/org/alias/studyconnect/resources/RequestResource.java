@@ -1,30 +1,62 @@
 package org.alias.studyconnect.resources;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import org.alias.studyconnect.model.Request;
+import org.alias.studyconnect.model.UserDetails;
+import org.alias.studyconnect.services.RequestService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class RequestResource {
 	
+	private RequestService requestService;
+	
+	// Get my received request
 	@Path("received")
 	@GET
-	public String message(){
-		return "look at the hashSet of the requesting user and send the details";
+	public Response myReceivedRequest(@PathParam ("userId") int userId) throws JsonProcessingException{
+		requestService = new RequestService();
+		String result = requestService.getReceivedRequest(userId);
+		return Response.status(Status.OK)
+						.entity(result)
+						.build();
 	}
 	
+	//Get Sent Request
 	@Path("sent")
 	@GET
-	public String message2(){
-		return "look at the sentRequest hashSet and send the details";
+	public Response mySentRequest(@PathParam ("userId") int userId) throws JsonProcessingException{
+		requestService = new RequestService();
+		String result = requestService.getSentRequest(userId);
+		return Response.status(Status.OK)
+						.entity(result)
+						.build();
 	}
 	
+	/*	Create a new request in the request table with the request object recieved
+		Add the request to the corresponding sent user hashtable
+		Add the request to the corresponding received user hashtable
+		Add to subjects list
+		Throw incomplete if any of the steps fails
+	*/
 	@POST
-	public String message3 (){
-		return "1. Create a new request in the request table with the request object recieved"
-				+ "2. Add the request to the corresponding sent user hashtable"
-				+ "3. add the request to the corresponding received user hashtable"
-				+ "Throw incomplete if any of the steps fails";
+	public Response addRequest (Request request){
+		requestService = new RequestService();
+		int result = requestService.addRequest(request);
+		return Response.status(Status.OK)
+						.build();
 	}
 	
 	//Completing or rejecting a request

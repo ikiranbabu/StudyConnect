@@ -84,7 +84,7 @@ public class UserResource {
 		return new SearchSubjectResource();
 	}
 	
-	@Path("/request/")
+	@Path("{userId}/request/")
 	public RequestResource message5(){
 		return new RequestResource();
 	}

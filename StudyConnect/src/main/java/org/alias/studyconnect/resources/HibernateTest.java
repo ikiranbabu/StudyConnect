@@ -6,6 +6,8 @@ import java.util.Set;
 import org.alias.studyconnect.model.College;
 import org.alias.studyconnect.model.Department;
 import org.alias.studyconnect.model.Module;
+import org.alias.studyconnect.model.Request;
+import org.alias.studyconnect.model.RequestId;
 import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
 import org.hibernate.Session;
@@ -105,38 +107,57 @@ public class HibernateTest {
 		
 		
 		//adding modules to a subject
+
+//		session.flush();
+//		session.clear();
+//		Subject subject = session.get(Subject.class, 3);
+//		Module module = new Module();
+//		module.setModuleName("Java OOP Review");
+//		module.setSubjectId(subject);
+//		session.save(module);
+//		module = new Module();
+//		module.setModuleName("Generics");
+//		module.setSubjectId(subject);
+//		session.save(module);
+//		module = new Module();
+//		module.setModuleName("Collections");
+//		module.setSubjectId(subject);
+//		session.save(module);
+//		module = new Module();
+//		module.setModuleName("MetaProgrammin");
+//		module.setSubjectId(subject);
+//		session.save(module);
+//		module = new Module();
+//		module.setModuleName("Using Lambda Expression");
+//		module.setSubjectId(subject);
+//		session.save(module);
+//		module = new Module();
+//		module.setModuleName("Designing with Lambdas");
+//		module.setSubjectId(subject);
+//		session.save(module);
+//		module = new Module();
+//		module.setModuleName("Concurrent Programming");
+//		module.setSubjectId(subject);
+//		session.save(module);
 		
-		session.flush();
-		session.clear();
-		Subject subject = session.get(Subject.class, 3);
-		Module module = new Module();
-		module.setModuleName("Java OOP Review");
-		module.setSubjectId(subject);
-		session.save(module);
-		module = new Module();
-		module.setModuleName("Generics");
-		module.setSubjectId(subject);
-		session.save(module);
-		module = new Module();
-		module.setModuleName("Collections");
-		module.setSubjectId(subject);
-		session.save(module);
-		module = new Module();
-		module.setModuleName("MetaProgrammin");
-		module.setSubjectId(subject);
-		session.save(module);
-		module = new Module();
-		module.setModuleName("Using Lambda Expression");
-		module.setSubjectId(subject);
-		session.save(module);
-		module = new Module();
-		module.setModuleName("Designing with Lambdas");
-		module.setSubjectId(subject);
-		session.save(module);
-		module = new Module();
-		module.setModuleName("Concurrent Programming");
-		module.setSubjectId(subject);
-		session.save(module);
+		//Adding request
+		
+		Request request = new Request();
+		UserDetails toUser = session.get(UserDetails.class, 45259783);
+		UserDetails fromUser = session.get(UserDetails.class, 4986985);
+		Subject subject = session.get(Subject.class, 6);
+		request.setFlag(0);
+		request.setSubject(subject);
+		request.setUserSent(fromUser);
+		request.setUserReceived(toUser);
+		request.setToUserName(toUser.getUserName());
+		request.setFromUserName(fromUser.getUserName());
+		RequestId reqId = new RequestId();
+		reqId.setToUserId(toUser.getUserId());
+		reqId.setFromUserId(fromUser.getUserId());
+		reqId.setSubjectCRN(subject.getSubjectCRN());
+		request.setRequestId(reqId);
+		session.save(request);
 		session.getTransaction().commit();
 		session.close();
 	}
