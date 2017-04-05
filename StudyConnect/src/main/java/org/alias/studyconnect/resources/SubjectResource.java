@@ -29,7 +29,8 @@ public class SubjectResource {
 	private SubjectService ss;
 	private ObjectMapper objectMapper;
 	
-	// "fetch details of student id " + Id + " and send back the list of subject as reponse";
+	
+//	Fetch list of subject related to a particular user
 	@GET
 	public Response mySubjects(@PathParam("userId") int Id) throws JsonProcessingException{
 		ss = new SubjectService();
@@ -42,14 +43,17 @@ public class SubjectResource {
 						.build();
 	}
 	
+	
+//	Add the course to user list of subject and respond
 	@POST
 	public Response addSubject (@PathParam("userId") int id, Subject subject){
 		ss= new SubjectService();
 		ss.addSubject(id, subject);
 		return Response.ok(subject).build();
-//				return "Call the service to add the course and send the response";
 	}
 	
+	
+//	Delete a subject from user list of subjects
 	@DELETE
 	public Response deleteSubject (@PathParam("userId") int id, Subject subject) throws JsonProcessingException{
 		ss= new SubjectService();
@@ -59,8 +63,8 @@ public class SubjectResource {
 		String leftSubs = objectMapper.writeValueAsString(leftSubjects);
 		return Response.ok(leftSubs).build();
 	}
-//		return "Call the service to delete the subject and send the appropriate response  ";
-	
+
+//	Module resources
 	@Path("/{subjectId}/")
 	public ModuleResource message4(){
 		return new ModuleResource();

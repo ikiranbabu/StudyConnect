@@ -29,7 +29,7 @@ public class Subject implements Serializable{
 	@Id
 	private int subjectCRN;
 	private String subjectName;
-	@OneToMany(mappedBy = "subjectName", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "subjectId", fetch = FetchType.EAGER)
 	private Set<Module> modules = new HashSet<>();
 	@ManyToMany(mappedBy = "subjectList", fetch = FetchType.EAGER)
 	@JsonIgnore // avoid infinite recursion

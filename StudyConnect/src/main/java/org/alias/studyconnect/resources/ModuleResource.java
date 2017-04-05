@@ -1,49 +1,91 @@
 package org.alias.studyconnect.resources;
 
-import javax.ws.rs.DELETE;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
+import org.alias.studyconnect.services.ModuleService;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
 public class ModuleResource {
 	
+	private ModuleService moduleService;
+	
+	//Fetch all the modules from a subject and send response
 	@GET
-	public String message4(){
-		return "Fetch all the modules from a subject and send response ";
+	public Response getModules(@PathParam("subjectId") int subjectId){
+		moduleService = new ModuleService();
+		String result ="";
+		try {
+			result = moduleService.moduleBySubject(subjectId);
+		} catch (JsonProcessingException e ) {
+			e.printStackTrace();
+			result = "Could not convert to JSON";
+			return Response.status(Status.NOT_FOUND).entity(result)
+					.build();
+		}catch (NullPointerException e ) {
+			e.printStackTrace();
+			result = "No modules found for the subject";
+			return Response.status(Status.NOT_FOUND).entity(result)
+					.build();
+		}
+		return Response.status(Status.OK)
+						.entity(result)
+						.build();
 	}
 	
-	@POST
-	@Path("module")
-	public String message5(){
-		return "Add the module to module list of a student subject ";
-	}
-	@DELETE
-	@Path("module")
-	public String message6(){
-		return "Delete the module ";
-	}
-	@PUT
-	@Path("module")
-	public String message7(){
-		return "Edit the module name ";
-	}
 	
+	//Fetch all the students who completed a module
 	@GET
 	@Path("module/{moduleId}/")
-	public String message8(){
-		return "1. Fetch all the students who completed a module"
-				+ "Check the student set in the module class";
+	public Response getStudentByModule(@PathParam("moduleId") int moduleId) throws JsonProcessingException{
+		moduleService = new ModuleService();
+		String moduleList = moduleService.getStudentByModule(moduleId);
+		return Response.status(Status.OK)
+						.entity(moduleList)
+						.build();
 	}
 	
+	//A student completes a module
+//	Add to the completed module list in the user details
+//	Add the student to the list completed student to the particular module
 	@POST
 	@Path("module/{moduleId}/")
-	public String message9(){
-		return "1. Add to the completed module list in the user details"
-				+ "2. add the student to the list completed student to the particular module";
+	public Response message9(){
+		return null;
 	}
 	
 	
 	
 	
 }
+
+
+
+// NOT VALID ACCORDING TO CURRENT DATABASE DESIGN
+
+//@POST
+//@Path("module")
+//public String message5(){
+//	return "Add the module to module list of a student subject ";
+//}
+//@DELETE
+//@Path("module")
+//public String message6(){
+//	return "Delete the module ";
+//}
+//@PUT
+//@Path("module")
+//public String message7(){
+//	return "Edit the module name ";
+//}

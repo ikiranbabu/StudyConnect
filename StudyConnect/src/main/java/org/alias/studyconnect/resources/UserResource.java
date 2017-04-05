@@ -27,22 +27,24 @@ public class UserResource {
 	
 	private UserService us;
 	
+	
+	
 	@GET
 	public String messageWelcome(){
 		return "Welcome to StudyConnect";
 	}
 	
-	@Path("/myregistration")
+	
+	@Path("/myregistration")	//Register a new user
 	@POST
 	public UserDetails register(UserDetails user){
 		RegistrationService rs = new RegistrationService();
 		UserDetails userNew = rs.registerUser(user);
 		return userNew;
-//		This request needs to register a new user to the database and send back the response as ok
-//		or not ok with redirection to the add courses page
 	}
 	
-	@GET
+	//Get user details
+	@GET						
 	@Path("/{userId}")
 	public Response profile(@PathParam("userId") int id){
 		us = new UserService();
@@ -50,11 +52,11 @@ public class UserResource {
 		return Response.status(javax.ws.rs.core.Response.Status.OK)
 					   .entity(user)
 					   .build();
-		
-		//This response will fetch the user details and send user details - for the settings/profile page
 	}
 	
-	@Path("/login")
+	
+	//Login resource
+	@Path("/login")				
 	@POST
 	public Response login(UserDetails user){
 			LoginService loginService = new LoginService();
@@ -67,18 +69,17 @@ public class UserResource {
 				return Response.status(Status.NOT_FOUND)
 						.build();
 			}
-		
-//		"This methhod will attempt validating login and return the response with all the"
-//		 "subject that a student has enrolled and redirect to the dashboard";
 	}
 	
-	
-	@Path("/{userId}/subject")
+	// Subject Resource
+	@Path("/{userId}/subject")		
 	public SubjectResource message3(){
 		return new SubjectResource();
 	}
 	
-	@Path("/search/")
+	
+	// Resource for subject from database on various criteria
+	@Path("/search/")				
 	public SearchSubjectResource message4(){
 		return new SearchSubjectResource();
 	}

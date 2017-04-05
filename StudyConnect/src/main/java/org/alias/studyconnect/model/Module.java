@@ -4,30 +4,41 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Module {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int moduleId;
 	private String moduleName;
+	@JsonIgnore
 	@ManyToOne
-	private Subject subjectName;
+	@JoinColumn(name = "SUBJECT_CRN")
+	private Subject subjectId; // subjectID
+	@JsonIgnore
 	@ManyToMany
 	Set<UserDetails> user = new HashSet<>();
 	
-	public Subject getSubjectName() {
-		return subjectName;
+	
+	public Subject getSubjectId() {
+		return subjectId;
 	}
-	public void setSubjectName(Subject subjectName) {
-		this.subjectName = subjectName;
+	public void setSubjectId(Subject subjectId) {
+		this.subjectId = subjectId;
 	}
 	public Set<UserDetails> getUser() {
 		return user;
 	}
+	
 	public void setUser(Set<UserDetails> user) {
 		this.user = user;
 	}

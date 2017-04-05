@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.alias.studyconnect.model.College;
 import org.alias.studyconnect.model.Department;
+import org.alias.studyconnect.model.Module;
 import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
 import org.hibernate.Session;
@@ -18,7 +19,7 @@ public class HibernateTest {
 		
 		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 		Session session = sessionFactory.openSession();
-		
+		session.beginTransaction();
 		
 //		Add colleges
 		
@@ -45,11 +46,10 @@ public class HibernateTest {
 //			college.setCollegeName(collegename);	
 //			session.save(college);
 //			session.flush();
-//			session.clear();
-//			
+//			session.clear();		
 //		}		
 		
-		
+		//Add department to a particualar college
 //		Department dept = new Department();
 //		Set<String> deptList = new HashSet<>();
 //		deptList.add("Accounting");
@@ -59,8 +59,7 @@ public class HibernateTest {
 //		deptList.add("Management");
 //		deptList.add("Marketing");
 		
-		session.beginTransaction();
-//		
+			
 //		for(String deptName : deptList){
 //			dept.setCollegeId(session.get(College.class,15));
 //			dept.setName(deptName);
@@ -68,16 +67,17 @@ public class HibernateTest {
 //			session.flush();
 //			session.clear();
 //		}
-		// adding a few subjects
-//		session.beginTransaction();
-		session.flush();
-		session.clear();
-		Subject sub1 = new Subject();
-		sub1.setSubjectCRN(6);
-		sub1.setSubjectName("Investment Banking");
-		sub1.setCollege(session.get(College.class, 15));
-		sub1.setDept(session.get(Department.class,24));
-		session.save(sub1);
+		
+		
+		// adding subjects
+//		session.flush();
+//		session.clear();
+//		Subject sub1 = new Subject();
+//		sub1.setSubjectCRN(6);
+//		sub1.setSubjectName("Investment Banking");
+//		sub1.setCollege(session.get(College.class, 15));
+//		sub1.setDept(session.get(Department.class,24));
+//		session.save(sub1);
 //		sub1 = new Subject();
 //		sub1.setSubjectCRN(2);
 //		sub1.setSubjectName("Networking Programming");
@@ -103,6 +103,40 @@ public class HibernateTest {
 //		sub1.setDept(session.get(Department.class,17));
 //		session.save(sub1);
 		
+		
+		//adding modules to a subject
+		
+		session.flush();
+		session.clear();
+		Subject subject = session.get(Subject.class, 3);
+		Module module = new Module();
+		module.setModuleName("Java OOP Review");
+		module.setSubjectId(subject);
+		session.save(module);
+		module = new Module();
+		module.setModuleName("Generics");
+		module.setSubjectId(subject);
+		session.save(module);
+		module = new Module();
+		module.setModuleName("Collections");
+		module.setSubjectId(subject);
+		session.save(module);
+		module = new Module();
+		module.setModuleName("MetaProgrammin");
+		module.setSubjectId(subject);
+		session.save(module);
+		module = new Module();
+		module.setModuleName("Using Lambda Expression");
+		module.setSubjectId(subject);
+		session.save(module);
+		module = new Module();
+		module.setModuleName("Designing with Lambdas");
+		module.setSubjectId(subject);
+		session.save(module);
+		module = new Module();
+		module.setModuleName("Concurrent Programming");
+		module.setSubjectId(subject);
+		session.save(module);
 		session.getTransaction().commit();
 		session.close();
 	}
