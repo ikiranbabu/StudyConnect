@@ -1,4 +1,4 @@
-package org.alias.studyconnect.services.userservices;
+package org.alias.studyconnect.services;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,12 +1,12 @@
-package org.alias.studyconnect.services.userservices;
+package org.alias.studyconnect.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.alias.studyconnect.model.College;
 import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
 
@@ -20,6 +20,7 @@ public class SubjectService {
 		em = EntityUtil.getEntityManager();
 		em.getTransaction().begin();
 		Query query = em.createQuery("from Subject");
+		@SuppressWarnings("unchecked")
 		List<Subject> subList = (List<Subject>)query.getResultList();
 		em.getTransaction().commit();
 		em.close();
@@ -32,7 +33,6 @@ public class SubjectService {
 		em.getTransaction().begin();
 		UserDetails user = em.find(UserDetails.class, id);
 		user.getSubjectList();
-		@SuppressWarnings("unchecked")
 		Set<Subject> mySubjects = (Set<Subject>) user.getSubjectList();
 		em.getTransaction().commit();
 		em.close();
@@ -58,8 +58,22 @@ public class SubjectService {
 		user.getSubjectList().remove(sub);
 		em.getTransaction().commit();
 		em.close();
-		return user.getSubjectList();
+		return user.getSubjectList(); 
 		
+	}
+	
+	public List<Subject> getSubjectInCollege(int id){
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		College college = em.find(College.class, id);
+		System.out.println(college.getCollegeName());
+		Query query = em.createQuery("from Subject as sub where sub.college.collegeID = ?");
+		query.setParameter(0 , new Integer(id));
+		@SuppressWarnings("unchecked")
+		List<Subject> subjects = (List<Subject>) query.getResultList();
+		em.getTransaction().commit();
+		em.close();
+		return subjects;
 	}
 	
 }

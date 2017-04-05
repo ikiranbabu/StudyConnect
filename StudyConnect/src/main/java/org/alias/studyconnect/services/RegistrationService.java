@@ -1,4 +1,4 @@
-package org.alias.studyconnect.services.userservices;
+package org.alias.studyconnect.services;
 
 import javax.persistence.EntityManager;
 import org.alias.studyconnect.model.UserDetails;

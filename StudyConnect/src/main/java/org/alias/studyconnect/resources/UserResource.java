@@ -15,9 +15,9 @@ import javax.ws.rs.core.Response.Status;
 
 import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
-import org.alias.studyconnect.services.userservices.LoginService;
-import org.alias.studyconnect.services.userservices.RegistrationService;
-import org.alias.studyconnect.services.userservices.UserService;;
+import org.alias.studyconnect.services.LoginService;
+import org.alias.studyconnect.services.RegistrationService;
+import org.alias.studyconnect.services.UserService;;
 
 @Path("user")
 @Consumes(MediaType.APPLICATION_JSON)

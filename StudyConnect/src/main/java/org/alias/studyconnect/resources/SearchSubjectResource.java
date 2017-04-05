@@ -1,25 +1,23 @@
 package org.alias.studyconnect.resources;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.alias.studyconnect.model.Subject;
-import org.alias.studyconnect.services.userservices.SubjectService;
+import org.alias.studyconnect.services.SubjectService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
-import jersey.repackaged.com.google.common.collect.Lists;
 
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,32 +25,37 @@ import jersey.repackaged.com.google.common.collect.Lists;
 
 public class SearchSubjectResource {
 	
-	private SubjectService ss;
+	private SubjectService subjectService;
 	private ObjectMapper objectMapper;
 	
-	// Return all the subject at USF
-	@GET
+	
+	@GET	// Return all the subject at USF
 	public Response getSubjects() throws JsonProcessingException{
-		ss = new SubjectService();	
-		List<Subject> subList = ss.getAllSubjects();
-
-//		GenericEntity<List<Subject>> entity = 
-//	            new GenericEntity<List<Subject>>(new ArrayList<Subject>(subList)) {};
-//		subList.toArray(new Subject[subList.size()])
+		subjectService = new SubjectService();	
+		List<Subject> subList = subjectService.getAllSubjects();
 		objectMapper = new ObjectMapper();
 		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     	String arrayToJson = objectMapper.writeValueAsString(subList);
-//    	System.out.println(arrayToJson);
 		return Response.status(Status.OK)
 					   .entity(arrayToJson)
 					   .build();
-
+		
+//		GenericEntity<List<Subject>> entity = new GenericEntity<List<Subject>>
+//											  (new ArrayList<Subject>(subList)) {};
+//		subList.toArray(new Subject[subList.size()])
 	}
 	
-	@GET
+	@GET	//Return all the subject with the given college id
 	@Path("college/{collegeId}")
-	public String message2(){
-		return "Return all the subject with the given college id";
+	public Response subjectInCollege(@PathParam("collegeId") int collegeId) throws JsonProcessingException{
+		subjectService = new SubjectService();
+		List<Subject> subjects = subjectService.getSubjectInCollege(collegeId);
+		objectMapper = new ObjectMapper();
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		String subInCollege = objectMapper.writeValueAsString(subjects);
+		return Response.status(Status.OK)
+					  .entity(subInCollege)
+					  .build();
 	}
 	
 	@GET

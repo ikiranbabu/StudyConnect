@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.alias.studyconnect.model.Subject;
-import org.alias.studyconnect.services.userservices.SubjectService;
+import org.alias.studyconnect.services.SubjectService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

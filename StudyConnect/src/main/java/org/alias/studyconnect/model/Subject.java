@@ -32,7 +32,7 @@ public class Subject implements Serializable{
 	@OneToMany(mappedBy = "subjectName", fetch = FetchType.EAGER)
 	private Set<Module> modules = new HashSet<>();
 	@ManyToMany(mappedBy = "subjectList", fetch = FetchType.EAGER)
-	@JsonIgnore
+	@JsonIgnore // avoid infinite recursion
 	private Set<UserDetails> studentList = new HashSet<>();
 	@OneToMany(mappedBy = "subject", fetch = FetchType.EAGER)
 	private Set<Request> requestList = new HashSet<>();
