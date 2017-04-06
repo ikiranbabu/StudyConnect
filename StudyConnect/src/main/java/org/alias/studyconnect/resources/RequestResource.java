@@ -4,6 +4,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -59,23 +60,31 @@ public class RequestResource {
 						.build();
 	}
 	
-	//Completing or rejecting a request
+	//	Completing or rejecting a request
+	//	Delete the request with this primary key from the module table
+	//	Delete it from both the requesting and the sent user hash set
+	//	Close the chat room
+	//	Remove users from each others request list
 	@DELETE
-	public String message4(){
-		return "1.Delete the request with this primary key from the module table"
-				+ "2. Delete it from both the th requesting and the sent user hash set"
-				+ "3.Close the chat room"
-				+ "4. Remove users from each others request list";
+	public Response deleteRequest (Request request){
+		requestService = new RequestService();
+		int result = requestService.deleteRequest(request);
+		return Response.status(Status.OK)
+						.build();
 	}
 	
+	
+//	Set the corresponding request flag to 1."
+//	Change accept to complete in mobile"
+//	Add the user to the chat list of both the users. "
 	//Accepting a request
 	@Path("accept")
-	@POST
-	public String message5(){
-		return "1.Set the corresponding request flag to 1."
-				+ "Change accept to complete in mobile"
-				+ "2. Add the user to the chat list of both the users. "
-				+ "Remove the requests from the request list of both the users";
+	@PUT
+	public Response acceptRequest(Request request){
+		requestService = new RequestService();
+		int result = requestService.acceptRequest(request);
+		return Response.status(Status.OK)
+					   .build();
 	}
 	
 

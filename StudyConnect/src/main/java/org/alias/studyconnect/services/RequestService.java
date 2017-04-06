@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 
 import org.alias.studyconnect.model.Module;
 import org.alias.studyconnect.model.Request;
+import org.alias.studyconnect.model.RequestId;
 import org.alias.studyconnect.model.Subject;
 import org.alias.studyconnect.model.UserDetails;
 
@@ -63,9 +64,45 @@ public class RequestService {
 		request.setUserSent(fromUser);
 		request.setUserReceived(toUser);
 		request.setSubject(subject);
-//		toUser.getReqReceived().add(request);
-//		fromUser.getReqSent().add(request);
-//		subject.getRequestList().add(request);
+	}
+
+
+	public int deleteRequest(Request request) {
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		RequestId reqid = request.getRequestId();
+		Request req = em.find(Request.class, reqid);
+		//doDelOperations(request);
+		req = em.merge(req);
+		em.remove(req);
+		em.getTransaction().commit();
+		em.close();	
+		return 1;
+	}
+
+
+	private void doDelOperations(Request request) {
+		UserDetails toUser = em.find(UserDetails.class, request.getRequestId().getToUserId());
+		UserDetails fromUser = em.find(UserDetails.class, request.getRequestId().getFromUserId());
+		Subject subject = em.find(Subject.class, request.getRequestId().getSubjectCRN());
+		toUser.getReqReceived().remove(request);
+		fromUser.getReqSent().remove(request);
+		subject.getRequestList().remove(request);
+		
+	}
+
+
+	public int acceptRequest(Request request) {
+		em = EntityUtil.getEntityManager();
+		em.getTransaction().begin();
+		RequestId reqid = request.getRequestId();
+		Request req = em.find(Request.class, reqid);
+		req.setFlag(1);
+		em.merge(req);
+		em.getTransaction().commit();
+		em.close();	
+		return 1;
 	}
 
 }
+
