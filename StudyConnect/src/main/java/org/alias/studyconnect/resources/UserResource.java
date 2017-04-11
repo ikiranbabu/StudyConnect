@@ -37,10 +37,14 @@ public class UserResource {
 	
 	@Path("/myregistration")	//Register a new user
 	@POST
-	public UserDetails register(UserDetails user){
+	public Response register(UserDetails user){
 		RegistrationService rs = new RegistrationService();
-		UserDetails userNew = rs.registerUser(user);
-		return userNew;
+		String userNew = rs.registerUser(user);
+		if(userNew.equals("rollback"))
+			return Response.status(Status.CONFLICT).build();
+		if(userNew.equals("json"))
+			return Response.status(Status.BAD_REQUEST).build();
+		return Response.ok(userNew).build();
 	}
 	
 	//Get user details
